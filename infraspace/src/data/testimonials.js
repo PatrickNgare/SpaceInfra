@@ -1,0 +1,42 @@
+export const testimonials = [
+  {
+    id: 1,
+    name: 'John Kamau',
+    role: 'Homeowner, Karen',
+    rating: 5,
+    quote: 'Absolutely impressed with the quality of work. They delivered our 5-bedroom home two weeks ahead of schedule and the finish is impeccable. Would recommend to anyone looking to build in Nairobi.',
+    image: '/assets/images/testimonial1.webp',
+  },
+  {
+    id: 2,
+    name: 'Grace Wanjiku',
+    role: 'Business Owner, Kilimani',
+    rating: 5,
+    quote: 'They handled our commercial office block from ground up. Professional team, transparent communication, and they stayed within budget. Our tenants moved in on the agreed date.',
+    image: '/assets/images/testimonial2.webp',
+  },
+  {
+    id: 3,
+    name: 'David Ochieng',
+    role: 'Homeowner, Westlands',
+    rating: 5,
+    quote: 'The renovation of our family home was done beautifully. The team was respectful of our space and cleaned up daily. The kitchen is now our favourite room in the house.',
+    image: '/assets/images/testimonial3.webp',
+  },
+  {
+    id: 4,
+    name: 'Amina Hassan',
+    role: 'Property Developer, Runda',
+    rating: 5,
+    quote: 'I have used them for three projects now and they keep getting better. Reliable, skilled, and honest. They are my go-to construction team in Nairobi.',
+    image: '/assets/images/testimonial4.webp',
+  },
+  {
+    id: 5,
+    name: 'Peter Mwangi',
+    role: 'Homeowner, Lavington',
+    rating: 5,
+    quote: 'From the initial consultation to the final handover, everything was smooth. They listened to what we wanted and delivered exactly that. Very happy with our new home.',
+    image: '/assets/images/testimonial5.webp',
+  },
+]
