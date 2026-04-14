@@ -15,9 +15,9 @@ import { projects } from '@/data/projects'
 const iconMap = { FaHome, FaBuilding, FaTools, FaLeaf }
 
 const whyUs = [
-  { icon: FaShieldAlt, title: 'Quality Guaranteed',  desc: 'We use only certified materials and back every project with a structural warranty.' },
-  { icon: FaUsers,     title: 'Expert Team',         desc: 'Our architects, engineers, and craftsmen bring decades of combined experience.' },
-  { icon: FaClock,     title: 'On-Time Delivery',    desc: 'We commit to timelines and communicate proactively — no surprises at handover.' },
+  { icon: FaShieldAlt, title: 'Quality Guaranteed',  desc: 'Certified materials and a structural warranty on every project we deliver.' },
+  { icon: FaUsers,     title: 'Expert Team',         desc: 'Architects, engineers, and craftsmen with decades of combined experience.' },
+  { icon: FaClock,     title: 'On-Time Delivery',    desc: 'We commit to timelines and communicate proactively — no surprises.' },
   { icon: FaMedal,     title: 'Award-Winning Work',  desc: 'Recognised for excellence in construction and design across East Africa.' },
 ]
 
@@ -38,8 +38,9 @@ export default function Home() {
       <StatsBar />
 
       {/* ── Services ── */}
-      <section className="py-24">
-        <div className="container mx-auto px-4">
+      <section className="py-28 relative">
+        <div className="absolute inset-0 dot-overlay-dark pointer-events-none opacity-60" />
+        <div className="container mx-auto px-4 relative">
           <SectionHeader
             eyebrow="What We Do"
             title="Our Services"
@@ -52,36 +53,39 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
           >
-            {services.map((service) => {
+            {services.map((service, index) => {
               const Icon = iconMap[service.icon]
               return (
                 <motion.div key={service.id} variants={fadeUp}>
                   <Link
                     to={`/services/${service.slug}`}
-                    className="group relative block bg-white border border-neutral-100 rounded-xl p-7 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden"
+                    className="group relative block bg-white border border-neutral-100/80 rounded-2xl p-7 shadow-sm hover:shadow-2xl hover:-translate-y-2 hover:border-transparent transition-all duration-400 overflow-hidden"
                   >
                     {/* Ghost number watermark */}
-                    <span className="absolute top-3 right-4 text-7xl font-heading font-bold text-neutral-100 group-hover:text-white/5 transition-colors duration-300 select-none leading-none pointer-events-none">
-                      {String(service.id).padStart(2, '0')}
+                    <span className="absolute top-3 right-4 text-7xl font-heading font-bold text-neutral-100 group-hover:text-secondary/5 transition-colors duration-500 select-none leading-none pointer-events-none">
+                      {String(index + 1).padStart(2, '0')}
                     </span>
 
-                    {/* Dark hover fill */}
-                    <div className="absolute inset-0 bg-primary-dark opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
+                    {/* Hover gradient fill */}
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-dark to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-2xl" />
+
+                    {/* Bottom orange accent */}
+                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left rounded-b-2xl" />
 
                     <div className="relative z-10">
-                      <div className="w-11 h-11 bg-secondary/10 rounded-lg flex items-center justify-center mb-5 group-hover:bg-secondary/20 transition-colors duration-300">
-                        {Icon && <Icon className="text-secondary" size={19} />}
+                      <div className="w-12 h-12 bg-secondary/10 rounded-xl flex items-center justify-center mb-6 group-hover:bg-white/10 transition-colors duration-300">
+                        {Icon && <Icon className="text-secondary group-hover:text-secondary transition-colors duration-300" size={20} />}
                       </div>
-                      <h3 className="font-heading font-bold text-neutral-900 group-hover:text-white text-base mb-2 transition-colors duration-300">
+                      <h3 className="font-heading font-bold text-neutral-900 group-hover:text-white text-base mb-2.5 transition-colors duration-300 leading-snug">
                         {service.title}
                       </h3>
-                      <p className="text-neutral-500 group-hover:text-white/60 text-sm leading-relaxed mb-5 transition-colors duration-300">
+                      <p className="text-neutral-500 group-hover:text-white/60 text-sm leading-relaxed mb-6 transition-colors duration-300">
                         {service.shortDesc}
                       </p>
-                      <span className="inline-flex items-center gap-1.5 text-secondary text-sm font-semibold group-hover:gap-2.5 transition-all duration-200">
-                        Learn more <FaArrowRight size={11} />
+                      <span className="inline-flex items-center gap-1.5 text-secondary text-xs font-semibold uppercase tracking-wider group-hover:gap-3 transition-all duration-200">
+                        Learn more <FaArrowRight size={10} />
                       </span>
                     </div>
                   </Link>
@@ -93,7 +97,7 @@ export default function Home() {
       </section>
 
       {/* ── Featured Projects ── */}
-      <section className="py-24 bg-neutral-50 relative overflow-hidden">
+      <section className="py-28 bg-neutral-50 relative overflow-hidden">
         <div className="absolute inset-0 grid-overlay-dark pointer-events-none" />
         <div className="container mx-auto px-4 relative">
           <div className="flex items-end justify-between mb-14">
@@ -106,18 +110,18 @@ export default function Home() {
               to="/portfolio"
               className="hidden md:inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors shrink-0 mb-14 group"
             >
-              View All Projects
-              <FaArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
+              View All
+              <FaArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          {/* Cinematic hero card — first real project */}
+          {/* Cinematic hero card */}
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="mb-6"
+            className="mb-5"
           >
             <Link
               to="/portfolio"
@@ -129,13 +133,11 @@ export default function Home() {
                 src={featuredProjects[1].coverImage}
                 alt={featuredProjects[1].title}
                 loading="lazy"
-                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-[1.2s] ease-out"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-[1.04] transition-transform duration-[1.4s] ease-out"
               />
-              {/* Layered gradient */}
-              <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary-dark/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/90 via-primary-dark/45 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/80 via-transparent to-transparent" />
 
-              {/* Category + photo count */}
               <div className="absolute top-6 left-6 flex items-center gap-3">
                 <span className="bg-secondary text-white text-[11px] font-bold px-3 py-1 uppercase tracking-wider">
                   {featuredProjects[1].category}
@@ -145,23 +147,21 @@ export default function Home() {
                 </span>
               </div>
 
-              {/* Ghost project number */}
-              <div className="absolute top-4 right-6 text-white/10 font-heading font-bold text-8xl leading-none select-none">
+              <div className="absolute top-4 right-6 text-white/[0.07] font-heading font-bold text-9xl leading-none select-none">
                 {String(featuredProjects[1].id).padStart(2, '0')}
               </div>
 
-              {/* Bottom content */}
               <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10">
                 <p className="text-secondary text-xs font-semibold uppercase tracking-[0.2em] mb-2">
                   {featuredProjects[1].location}
                 </p>
-                <h3 className="font-heading font-bold text-white text-2xl md:text-3xl lg:text-4xl group-hover:text-secondary transition-colors duration-300 mb-3 max-w-xl">
+                <h3 className="font-heading font-bold text-white text-2xl md:text-3xl lg:text-4xl group-hover:text-secondary transition-colors duration-300 mb-3 max-w-2xl tracking-tight">
                   {featuredProjects[1].title}
                 </h3>
-                <p className="text-white/60 text-sm max-w-lg leading-relaxed hidden md:block">
+                <p className="text-white/55 text-sm max-w-lg leading-relaxed hidden md:block">
                   {featuredProjects[1].description}
                 </p>
-                <span className="inline-flex items-center gap-2 mt-5 text-white/60 text-sm group-hover:text-secondary transition-colors duration-200 font-medium">
+                <span className="inline-flex items-center gap-2 mt-5 text-white/50 group-hover:text-secondary text-sm font-medium transition-colors duration-200">
                   View Gallery <FaArrowRight size={11} className="group-hover:translate-x-1 transition-transform" />
                 </span>
               </div>
@@ -174,13 +174,13 @@ export default function Home() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 gap-5"
           >
             {[featuredProjects[0], featuredProjects[2]].map((project) => (
               <motion.div key={project.id} variants={fadeUp}>
                 <Link
                   to="/portfolio"
-                  className="group block rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300"
+                  className="group block rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
                 >
                   <div className="relative h-64 bg-primary-dark overflow-hidden">
                     {project.coverImage ? (
@@ -205,10 +205,10 @@ export default function Home() {
                       </div>
                     )}
                     <div className="absolute bottom-0 left-0 right-0 p-5">
-                      <h3 className="font-heading font-bold text-white text-base group-hover:text-secondary transition-colors duration-200">
+                      <h3 className="font-heading font-bold text-white text-base group-hover:text-secondary transition-colors duration-200 tracking-tight">
                         {project.title}
                       </h3>
-                      <p className="text-white/50 text-xs mt-1">{project.location} · {project.duration}</p>
+                      <p className="text-white/50 text-xs mt-1">{project.location}</p>
                     </div>
                   </div>
                 </Link>
@@ -225,48 +225,67 @@ export default function Home() {
       </section>
 
       {/* ── Why Choose Us ── */}
-      <section className="py-24">
+      <section className="py-28">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-20 items-center">
 
-            {/* Left — header + intro */}
+            {/* Left — header + intro + link */}
             <div>
               <SectionHeader
                 eyebrow="Why InfraSpace"
                 title="Built on Trust & Excellence"
-                subtitle="We don't just build structures — we build relationships that last a lifetime."
+                subtitle="We don't just build structures — we build relationships that last a lifetime. Here's what sets us apart."
               />
               <Link
                 to="/about"
-                className="inline-flex items-center gap-2 text-primary font-semibold text-sm hover:text-secondary transition-colors group"
+                className="group inline-flex items-center gap-2.5 text-primary font-semibold text-sm hover:text-secondary transition-colors"
               >
-                Our Story <FaArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
+                Our Story
+                <FaArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />
               </Link>
+
+              {/* Divider */}
+              <div className="mt-12 pt-12 border-t border-neutral-100 grid grid-cols-2 gap-6">
+                {[
+                  { value: 'NCA', label: 'Registered & Certified' },
+                  { value: 'ISO', label: '9001 Quality Standard' },
+                ].map(({ value, label }) => (
+                  <div key={label} className="flex items-start gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
+                      <span className="font-heading font-bold text-primary text-xs">{value}</span>
+                    </div>
+                    <p className="text-neutral-600 text-sm leading-tight pt-0.5">{label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* Right — 2×2 grid of cards */}
+            {/* Right — 2×2 cards */}
             <motion.div
               variants={stagger}
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="grid grid-cols-1 sm:grid-cols-2 gap-5"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-4"
             >
               {whyUs.map((item, i) => (
                 <motion.div
                   key={i}
                   variants={fadeUp}
-                  className="relative bg-white border border-neutral-100 rounded-xl p-7 hover:shadow-lg hover:border-primary/10 transition-all duration-300 overflow-hidden"
+                  className="group relative bg-white border border-neutral-100 rounded-2xl p-7 hover:border-primary/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden"
                 >
                   {/* Ghost number */}
-                  <span className="absolute top-3 right-4 text-6xl font-heading font-bold text-neutral-100 select-none leading-none pointer-events-none">
+                  <span className="absolute top-3 right-4 text-6xl font-heading font-bold text-neutral-100 select-none leading-none pointer-events-none group-hover:text-secondary/5 transition-colors duration-300">
                     {String(i + 1).padStart(2, '0')}
                   </span>
+                  {/* Orange bottom bar on hover */}
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+
                   <div className="relative z-10">
-                    <div className="w-10 h-10 bg-secondary/10 rounded-lg flex items-center justify-center mb-4">
-                      <item.icon className="text-secondary" size={17} />
+                    <div className="w-11 h-11 bg-secondary/8 rounded-xl flex items-center justify-center mb-5 group-hover:bg-secondary/12 transition-colors duration-300">
+                      <item.icon className="text-secondary" size={18} />
                     </div>
-                    <h3 className="font-heading font-bold text-neutral-900 text-sm mb-2">{item.title}</h3>
+                    <h3 className="font-heading font-bold text-neutral-900 text-sm mb-2 tracking-tight">{item.title}</h3>
                     <p className="text-neutral-500 text-sm leading-relaxed">{item.desc}</p>
                   </div>
                 </motion.div>

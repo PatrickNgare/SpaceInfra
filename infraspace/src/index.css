@@ -4,8 +4,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────
+   BASE — global resets & defaults
+───────────────────────────────────────── */
 @layer base {
-  * {
+  *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -17,10 +20,11 @@
 
   body {
     font-family: 'Inter', Arial, sans-serif;
-    color: #2A2A2A;
+    color: #111827;
     background-color: #fff;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   ::selection {
@@ -28,30 +32,177 @@
     color: #fff;
   }
 
-  /* Custom scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #F0F0F0; }
-  ::-webkit-scrollbar-thumb { background: #1B3A6B; border-radius: 3px; }
+  /* Refined scrollbar */
+  ::-webkit-scrollbar          { width: 5px; }
+  ::-webkit-scrollbar-track    { background: #F5F5F5; }
+  ::-webkit-scrollbar-thumb    { background: #1B3A6B; border-radius: 99px; }
   ::-webkit-scrollbar-thumb:hover { background: #E87722; }
+
+  /* Smooth focus rings */
+  :focus-visible {
+    outline: 2px solid #E87722;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
 }
 
+/* ─────────────────────────────────────────
+   COMPONENTS — reusable design primitives
+───────────────────────────────────────── */
+@layer components {
+
+  /* ── Buttons ── */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 font-semibold text-sm tracking-wide transition-all duration-200 select-none cursor-pointer;
+  }
+  .btn-primary {
+    @apply btn bg-secondary text-white px-8 py-3.5 rounded-none
+           hover:bg-secondary-dark hover:-translate-y-px hover:shadow-lg hover:shadow-secondary/25
+           active:translate-y-0 active:shadow-none;
+  }
+  .btn-primary-lg {
+    @apply btn bg-secondary text-white px-10 py-4 text-base rounded-none
+           hover:bg-secondary-dark hover:-translate-y-px hover:shadow-xl hover:shadow-secondary/25
+           active:translate-y-0 active:shadow-none;
+  }
+  .btn-ghost {
+    @apply btn border border-white/25 text-white px-8 py-3.5
+           hover:border-white/50 hover:bg-white/8 hover:-translate-y-px
+           active:translate-y-0;
+  }
+  .btn-outline-primary {
+    @apply btn border border-primary/30 text-primary px-8 py-3.5 rounded-none
+           hover:border-primary hover:bg-primary hover:text-white hover:-translate-y-px hover:shadow-lg hover:shadow-primary/20
+           active:translate-y-0;
+  }
+
+  /* ── Cards ── */
+  .card {
+    @apply bg-white rounded-2xl border border-neutral-100 shadow-sm
+           hover:shadow-xl hover:-translate-y-1
+           transition-all duration-300;
+  }
+  .card-flat {
+    @apply bg-white rounded-2xl border border-neutral-100 shadow-sm;
+  }
+  .glass-card {
+    @apply bg-white/80 backdrop-blur-xl border border-white/50 shadow-xl shadow-black/5 rounded-2xl;
+  }
+  .glass-card-dark {
+    @apply bg-primary-dark/70 backdrop-blur-xl border border-white/10 shadow-xl rounded-2xl;
+  }
+
+  /* ── Surface backgrounds ── */
+  .surface-ghost {
+    @apply bg-neutral-50 border border-neutral-100 rounded-2xl;
+  }
+  .surface-dark {
+    @apply bg-primary-dark rounded-2xl;
+  }
+
+  /* ── Section spacing ── */
+  .section {
+    @apply py-28;
+  }
+  .section-sm {
+    @apply py-16;
+  }
+}
+
+/* ─────────────────────────────────────────
+   UTILITIES — design atoms & overlays
+───────────────────────────────────────── */
 @layer utilities {
+
+  /* Grid overlays */
   .grid-overlay {
     background-image:
       linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
       linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
     background-size: 72px 72px;
   }
-
   .grid-overlay-dark {
     background-image:
-      linear-gradient(rgba(27,58,107,0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(27,58,107,0.06) 1px, transparent 1px);
+      linear-gradient(rgba(27,58,107,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(27,58,107,0.05) 1px, transparent 1px);
     background-size: 48px 48px;
   }
-
   .dot-overlay {
-    background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px);
     background-size: 28px 28px;
   }
+  .dot-overlay-dark {
+    background-image: radial-gradient(circle, rgba(27,58,107,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  /* Noise texture — adds premium film-grain feel */
+  .noise {
+    position: relative;
+  }
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* Gradient text */
+  .text-gradient-orange {
+    background: linear-gradient(135deg, #E87722 0%, #F59340 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Text wrapping balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Animated underline — for link hovers */
+  .underline-grow {
+    @apply relative;
+  }
+  .underline-grow::after {
+    content: '';
+    @apply absolute bottom-0 left-0 h-px w-full bg-current scale-x-0 origin-left transition-transform duration-200;
+  }
+  .underline-grow:hover::after {
+    @apply scale-x-100;
+  }
+
+  /* Shimmer loading bar */
+  .shimmer {
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.8s infinite;
+  }
+
+  /* Hover lift */
+  .hover-lift {
+    @apply transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl;
+  }
+
+  /* Section divider */
+  .divider-gradient {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(27,58,107,0.15), transparent);
+  }
+}
+
+/* ─────────────────────────────────────────
+   CUSTOM KEYFRAMES
+───────────────────────────────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
 }
