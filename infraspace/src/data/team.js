@@ -8,9 +8,9 @@ export const team = [
   },
   {
     id: 2,
-    name: 'Susan Njeri',
-    role: 'Lead Architect',
-    bio: 'Registered architect with a passion for functional, beautiful spaces.',
+    name: 'Stanley Magochi',
+    role: 'Lead Quantity Surveyor',
+    bio: 'Expert in cost planning and contract management, ensuring every project stays on budget.',
     image: '/assets/images/team2.webp',
   },
   {
