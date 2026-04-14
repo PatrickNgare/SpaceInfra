@@ -25,13 +25,20 @@ export default function Testimonials() {
       />
 
       {/* Stats Banner */}
-      <section className="bg-secondary py-10">
-        <div className="container mx-auto px-4">
-          <div className="flex flex-wrap justify-center gap-12 text-white text-center">
-            {[['150+', 'Happy Clients'], ['4.9/5', 'Average Rating'], ['98%', 'Would Recommend']].map(([val, label]) => (
-              <div key={label}>
-                <p className="font-heading font-bold text-4xl">{val}</p>
-                <p className="text-sm text-white/80 mt-1">{label}</p>
+      <section className="relative bg-primary-dark py-14 overflow-hidden">
+        <div className="absolute inset-0 dot-overlay pointer-events-none" />
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-secondary to-transparent" />
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[500px] h-[200px] bg-secondary/15 rounded-full blur-[80px] pointer-events-none" />
+        <div className="relative container mx-auto px-4">
+          <div className="flex flex-wrap justify-center gap-px">
+            {[['150+', 'Happy Clients'], ['4.9/5', 'Average Rating'], ['98%', 'Would Recommend']].map(([val, label], i) => (
+              <div
+                key={label}
+                className={`text-center px-14 py-6 ${i < 2 ? 'border-r border-white/10' : ''}`}
+              >
+                <p className="font-heading font-bold text-5xl text-secondary leading-none">{val}</p>
+                <div className="w-6 h-0.5 bg-secondary/30 mx-auto my-2.5" />
+                <p className="text-white/45 text-xs uppercase tracking-[0.18em] font-semibold">{label}</p>
               </div>
             ))}
           </div>
@@ -49,8 +56,9 @@ export default function Testimonials() {
               <motion.div
                 key={t.id}
                 variants={fadeUp}
-                className="bg-white rounded-2xl p-7 shadow-sm border border-neutral-100 flex flex-col"
+                className="group relative bg-white rounded-2xl p-7 shadow-sm border border-neutral-100 hover:shadow-xl hover:-translate-y-1.5 hover:border-secondary/10 transition-all duration-300 flex flex-col overflow-hidden"
               >
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                 <FaQuoteLeft className="text-secondary/20 mb-4" size={32} />
                 <StarRating rating={t.rating} />
                 <p className="text-neutral-600 leading-relaxed text-sm flex-1 my-5">&ldquo;{t.quote}&rdquo;</p>

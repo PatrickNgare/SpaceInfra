@@ -1,57 +1,109 @@
 import { Link, NavLink } from 'react-router-dom'
 import { HiX } from 'react-icons/hi'
+import { FiArrowRight } from 'react-icons/fi'
 import { useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function MobileMenu({ links, isOpen, onClose }) {
-  // Lock body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isOpen])
 
-  if (!isOpen) return null
-
   return (
-    <div className="fixed inset-0 z-50 flex">
-      {/* Backdrop */}
-      <div className="absolute inset-0 bg-black/50" onClick={onClose} />
-      {/* Panel */}
-      <div className="relative ml-auto w-72 bg-white h-full flex flex-col shadow-xl">
-        <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100">
-          <span className="font-heading font-bold text-primary text-lg">Menu</span>
-          <button onClick={onClose} className="text-neutral-800 hover:text-primary transition-colors" aria-label="Close menu">
-            <HiX size={24} />
-          </button>
-        </div>
-        <nav className="flex-1 px-6 py-6 space-y-1">
-          {links.map(({ label, path }) => (
-            <NavLink
-              key={path}
-              to={path}
-              end={path === '/'}
-              onClick={onClose}
-              className={({ isActive }) =>
-                `block px-4 py-3 rounded-md font-medium transition-colors ${
-                  isActive
-                    ? 'bg-primary text-white'
-                    : 'text-neutral-800 hover:bg-neutral-100'
-                }`
-              }
-            >
-              {label}
-            </NavLink>
-          ))}
-        </nav>
-        <div className="px-6 py-6 border-t border-neutral-100">
-          <Link
-            to="/contact"
+    <AnimatePresence>
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex">
+          {/* Backdrop */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="absolute inset-0 bg-primary-dark/70 backdrop-blur-sm"
             onClick={onClose}
-            className="block w-full text-center bg-secondary text-white px-5 py-3 rounded-md font-semibold hover:bg-secondary-dark transition-colors"
+          />
+
+          {/* Panel */}
+          <motion.div
+            initial={{ x: '100%' }}
+            animate={{ x: 0 }}
+            exit={{ x: '100%' }}
+            transition={{ type: 'spring', stiffness: 340, damping: 36 }}
+            className="relative ml-auto w-72 bg-white h-full flex flex-col shadow-2xl"
           >
-            Get a Quote
-          </Link>
+            {/* Orange top accent */}
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-secondary to-secondary-light" />
+
+            {/* Header */}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-neutral-100 mt-0.5">
+              <div className="flex items-center gap-2.5">
+                <div className="w-7 h-7 bg-secondary rounded-md flex items-center justify-center font-heading font-bold text-[11px] text-white">IS</div>
+                <span className="font-heading font-bold text-primary text-base tracking-tight">InfraSpace</span>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-neutral-400 hover:text-neutral-800 hover:bg-neutral-100 transition-colors"
+                aria-label="Close menu"
+              >
+                <HiX size={20} />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex-1 px-4 py-5 space-y-1 overflow-y-auto">
+              {links.map(({ label, path }, i) => (
+                <motion.div
+                  key={path}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.05 + i * 0.045, duration: 0.3 }}
+                >
+                  <NavLink
+                    to={path}
+                    end={path === '/'}
+                    onClick={onClose}
+                    className={({ isActive }) =>
+                      `group flex items-center justify-between px-4 py-3 rounded-xl font-medium text-sm transition-all duration-200 ${
+                        isActive
+                          ? 'bg-secondary text-white shadow-sm shadow-secondary/20'
+                          : 'text-neutral-600 hover:text-neutral-900 hover:bg-neutral-50'
+                      }`
+                    }
+                  >
+                    {({ isActive }) => (
+                      <>
+                        {label}
+                        <FiArrowRight
+                          size={13}
+                          className={`transition-all duration-200 ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-1 group-hover:opacity-50 group-hover:translate-x-0'}`}
+                        />
+                      </>
+                    )}
+                  </NavLink>
+                </motion.div>
+              ))}
+            </nav>
+
+            {/* CTA */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35, duration: 0.3 }}
+              className="px-5 py-6 border-t border-neutral-100"
+            >
+              <Link
+                to="/contact"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 w-full bg-secondary text-white px-5 py-3.5 rounded-xl font-semibold text-sm hover:bg-secondary-dark transition-colors shadow-md shadow-secondary/20"
+              >
+                Get a Free Quote
+                <FiArrowRight size={13} />
+              </Link>
+            </motion.div>
+          </motion.div>
         </div>
-      </div>
-    </div>
+      )}
+    </AnimatePresence>
   )
 }

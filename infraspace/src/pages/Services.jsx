@@ -45,20 +45,24 @@ export default function Services() {
               const Icon = iconMap[service.icon]
               return (
                 <motion.div key={service.id} variants={fadeUp}
-                  className="group bg-white rounded-2xl border border-neutral-100 shadow-sm hover:shadow-lg transition-all overflow-hidden"
+                  className="group relative bg-white rounded-2xl border border-neutral-100 shadow-sm hover:shadow-2xl hover:-translate-y-1.5 hover:border-transparent transition-all duration-400 overflow-hidden"
                 >
-                  <div className="h-3 bg-gradient-to-r from-primary to-secondary" />
-                  <div className="p-8">
+                  {/* Hover gradient fill */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-primary-dark to-primary opacity-0 group-hover:opacity-100 transition-opacity duration-400 rounded-2xl pointer-events-none" />
+                  {/* Orange bottom sweep */}
+                  <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-400 origin-left rounded-b-2xl" />
+
+                  <div className="relative z-10 p-8">
                     <div className="flex items-start gap-5">
-                      <div className="w-14 h-14 bg-primary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-primary transition-all">
-                        {Icon && <Icon className="text-primary group-hover:text-white transition-colors" size={24} />}
+                      <div className="w-14 h-14 bg-secondary/10 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-white/10 transition-colors duration-300">
+                        {Icon && <Icon className="text-secondary group-hover:text-secondary transition-colors" size={24} />}
                       </div>
                       <div className="flex-1">
-                        <h2 className="font-heading font-bold text-xl text-neutral-900 mb-2">{service.title}</h2>
-                        <p className="text-neutral-600 leading-relaxed mb-5">{service.fullDesc}</p>
+                        <h2 className="font-heading font-bold text-xl text-neutral-900 group-hover:text-white mb-2 transition-colors duration-300">{service.title}</h2>
+                        <p className="text-neutral-600 group-hover:text-white/65 leading-relaxed mb-5 transition-colors duration-300">{service.fullDesc}</p>
                         <ul className="space-y-2 mb-6">
                           {service.features.map((f) => (
-                            <li key={f} className="flex items-center gap-2 text-sm text-neutral-700">
+                            <li key={f} className="flex items-center gap-2 text-sm text-neutral-700 group-hover:text-white/70 transition-colors duration-300">
                               <FaCheckCircle className="text-secondary shrink-0" size={14} />
                               {f}
                             </li>
@@ -66,7 +70,7 @@ export default function Services() {
                         </ul>
                         <Link
                           to={`/services/${service.slug}`}
-                          className="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-md font-semibold text-sm hover:bg-primary-dark transition-colors"
+                          className="inline-flex items-center gap-2 bg-secondary text-white px-6 py-2.5 font-semibold text-sm hover:bg-secondary-dark group-hover:bg-white group-hover:text-primary transition-all duration-300"
                         >
                           Learn More <FaArrowRight size={12} />
                         </Link>
@@ -94,8 +98,13 @@ export default function Services() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
           >
             {process.map((p) => (
-              <motion.div key={p.step} variants={fadeUp} className="bg-white rounded-xl p-6 border border-neutral-100 shadow-sm">
-                <span className="font-heading font-bold text-4xl text-primary/10">{p.step}</span>
+              <motion.div
+                key={p.step}
+                variants={fadeUp}
+                className="group relative bg-white rounded-xl p-6 border border-neutral-100 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-secondary/15 transition-all duration-300 overflow-hidden"
+              >
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <span className="font-heading font-bold text-5xl text-secondary/15 group-hover:text-secondary/25 transition-colors duration-300 leading-none">{p.step}</span>
                 <h3 className="font-heading font-bold text-neutral-900 mt-2 mb-2">{p.title}</h3>
                 <p className="text-neutral-500 text-sm leading-relaxed">{p.desc}</p>
               </motion.div>

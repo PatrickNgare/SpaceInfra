@@ -42,7 +42,10 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ duration: 0.7 }}
             >
-              <span className="text-secondary font-semibold text-sm uppercase tracking-widest">Who We Are</span>
+              <span className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.22em] text-secondary bg-secondary/8 border border-secondary/20 px-4 py-1.5 rounded-full mb-5">
+                <span className="w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                Who We Are
+              </span>
               <h2 className="font-heading text-3xl md:text-4xl font-bold text-neutral-900 mt-2 mb-6">
                 Built on a Foundation of Excellence
               </h2>
@@ -134,8 +137,16 @@ export default function About() {
             className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-4"
           >
             {values.map((v) => (
-              <motion.div key={v.title} variants={fadeUp} className="flex gap-4 p-6 bg-white rounded-xl border border-neutral-100 shadow-sm">
-                <FaCheckCircle className="text-secondary shrink-0 mt-1" size={20} />
+              <motion.div
+                key={v.title}
+                variants={fadeUp}
+                className="group relative flex gap-4 p-6 bg-white rounded-xl border border-neutral-100 shadow-sm hover:shadow-lg hover:-translate-y-1 hover:border-secondary/15 transition-all duration-300 overflow-hidden"
+              >
+                {/* Orange bottom sweep */}
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+                <div className="w-8 h-8 bg-secondary/10 rounded-lg flex items-center justify-center shrink-0 mt-0.5 group-hover:bg-secondary/20 transition-colors duration-300">
+                  <FaCheckCircle className="text-secondary" size={15} />
+                </div>
                 <div>
                   <h4 className="font-heading font-bold text-neutral-900 mb-1">{v.title}</h4>
                   <p className="text-neutral-500 text-sm leading-relaxed">{v.desc}</p>
@@ -156,7 +167,7 @@ export default function About() {
           >
             {team.map((member) => (
               <motion.div key={member.id} variants={fadeUp}
-                className="bg-white rounded-xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-md transition-shadow"
+                className="group relative bg-white rounded-xl overflow-hidden border border-neutral-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Photo or gradient placeholder */}
                 <div className="relative h-52 bg-primary-dark overflow-hidden">
@@ -172,7 +183,8 @@ export default function About() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-primary-dark/60 to-transparent" />
                 </div>
-                <div className="p-5">
+                <div className="relative p-5">
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
                   <h4 className="font-heading font-bold text-neutral-900">{member.name}</h4>
                   <p className="text-secondary text-xs font-semibold uppercase tracking-wider mt-0.5 mb-2">{member.role}</p>
                   <p className="text-neutral-500 text-sm leading-relaxed">{member.bio}</p>
